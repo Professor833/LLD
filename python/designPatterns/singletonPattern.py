@@ -1,10 +1,28 @@
 '''
 Purpose: Singleton Pattern
     - Ensure a class has only one instance, and provide a global point of access to it.
-    - There are many different ways to implement the singleton pattern in Python. We will use the Borg pattern.
-    - The Borg pattern is a way to share state between objects while ensuring that only one object is created.
+    - There are many different ways to implement the singleton pattern in Python.
 '''
 
+
+'''
+Traditional implementation of the Singleton pattern in Python is using `__new__` method. The __new__ method is a static method that is responsible for creating an object given a class. It is called before __init__ method. The __new__ method is called every time a new object is instantiated. The __new__ method is used to control the creation of a new instance. It is called first, and is responsible for returning a new instance of your class. In contrast, __init__ doesn't return anything; it's only responsible for initializing the instance after it's been created.
+
+Note: It's the most Pythonic way to implement the singleton pattern. However, this implementation is not thread-safe. If you need a thread-safe implementation, you can use Lock from threading module for the critical section in your code.
+'''
+
+class Singleton:
+    _instance = None
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__new__(cls, *args, **kwargs)
+        return cls._instance
+
+
+'''
+Borg Pattern
+    - The Borg pattern is a way to share state between objects while ensuring that only one object is created.
+'''
 class Borg:
     _shared_state = {}
     def __init__(self):
@@ -19,6 +37,9 @@ class Borg:
 
 class Singleton(Borg):
     def __init__(self, **kwargs):
+        '''
+        This class now shares all its attributes among its various instances. This eliminates the need for the Singleton pattern, but we can still use this Borg class to reduce the overhead associated with the standard Singleton implementation.
+        '''
         Borg.__init__(self)
         self._shared_state.update(kwargs)
 
@@ -34,3 +55,5 @@ if __name__ == '__main__':
     # update the shared state
     z = Singleton(HTTP='New Value')
     print(z)
+
+
