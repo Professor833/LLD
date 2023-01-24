@@ -32,12 +32,11 @@ class MyClass:
         print("This is a public method")
 
 
-if __name__ == "__main__":
-    mc = MyClass()
-    print(mc.classVar) # 0
-    print(mc._protectedVar) # 0
-    print(mc.publicVar) # 0
-    mc.classMethod() # This is a private method
-    mc._protectedMethod()
-    mc.publicMethod()
-    mc.__privateMethod() # AttributeError: 'MyClass' object has no attribute '__privateMethod'
+mc = MyClass()
+print(mc.classVar) # 0
+print(mc._protectedVar) # 0
+print(mc.publicVar) # 0
+mc.classMethod() # This is a private method
+mc._protectedMethod()
+mc.publicMethod()
+mc.__privateMethod() # AttributeError: 'MyClass' object has no attribute '__privateMethod'
